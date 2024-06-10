@@ -18,6 +18,8 @@ def create(request):
     description = request.POST['description']
     new_file = File.objects.create(file=file, description=description)
 
+    # Modifikasi file yang ada
+    # untuk mendapatkan filename dan filetype
     new_file.filename = str(new_file.file).split("/")[1]
     new_file.filetype = new_file.filename.split(".")[1]
     new_file.save()
