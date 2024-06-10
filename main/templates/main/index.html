@@ -1,0 +1,59 @@
+{% extends 'main/base.html' %}
+
+{% block 'content' %}
+<div class="col-12 col-md-8 col-lg-6 p-1 m-auto">
+    <h1 class="p-2 text-primary text-center border-bottom">
+        Share File
+    </h1>
+
+    <div class="col mb-3 p-3">
+
+        <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <input type="file" name="file" class="form-control" required>
+            </div>
+			<div class="mb-3">
+                <textarea name="description" class="form-control" placeholder="Describe your file" required></textarea>
+            </div>
+			<div class="mb-3">
+                <input type="submit" value="Share This File" class="btn btn-primary col-12">
+            </div>            
+        </form>
+
+    </div>
+
+    
+    {% for file in files %}
+
+        <div class="col p-4 mb-3 border rounded-3 shadow">
+            <div class="">
+                <p>{{ file.created_at }}</p>
+                <p>
+                    <a href="{{ file.file.url }}" download>    
+                        
+                        
+                        {% if file.filetype %}
+                            <i class="fs-2 bi bi-filetype-{{ file.filetype }}"></i>  
+                        {% else %}
+                            <i class="fs-2 bi bi-file-earmark"></i>                        
+                        {% endif %}
+                            
+                        
+                        {% if file.filename %}
+                            {{ file.filename }}
+                        {% else %}
+                            {{ file.file }}
+                        {% endif %}                           
+
+                    </a>
+                </p>
+                <p>{{ file.description }}</p>
+            </div>
+        </div>
+        
+    {% endfor %}
+    
+</div>
+
+{% endblock 'content' %}    
