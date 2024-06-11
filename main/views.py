@@ -19,11 +19,8 @@ def create(request):
     new_file = File.objects.create(file=file, description=description)
 
     # Modifikasi file yang ada
-    # untuk mendapatkan filename dan filetype
-    new_file.filename = str(new_file.file).split("/")[1]
-    new_file.filetype = new_file.filename.split(".")[1]
+    # untuk mendapatkan filetype
+    new_file.filetype = new_file.file.name.split(".")[-1]
     new_file.save()
-
-    # print(type(str(new_file.file)))
 
     return HttpResponseRedirect(reverse('index'))
